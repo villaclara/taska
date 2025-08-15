@@ -2,7 +2,7 @@ using BankSystem.EF.Entities;
 using BankSystem.Services.Models;
 
 namespace BankSystem.Services.Services;
-public class AccountService
+public class AccountService : IDisposable
 {
     private readonly BankContext context;
 
@@ -13,5 +13,16 @@ public class AccountService
     public IReadOnlyList<BankAccountFullInfoModel> GetBankAccountsFullInfo()
     {
         throw new NotImplementedException();
+    }
+
+    public void Dispose()
+    {
+        this.Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        this.context.Dispose();
     }
 }
