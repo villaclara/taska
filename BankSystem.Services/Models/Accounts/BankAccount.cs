@@ -9,30 +9,30 @@ public abstract class BankAccount
     public string Number { get; set; }
     public decimal Balance { get; set; }
     public string CurrencyCode { get; set; }
-    public AccountOwner Owner { get; set; }
+    public AccountOwner AccountOwner { get; set; }
     public int BonusPoints { get; set; }
     public abstract decimal OverDraft { get; set; }
 
     public BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator)
     {
-        this.Owner = owner;
+        this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
     }
     public BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator)
     {
-        this.Owner = owner;
+        this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
     }
     public BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator, decimal initialBalance)
     {
-        this.Owner = owner;
+        this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
         this.Balance = initialBalance;
     }
 
     public BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator, decimal initialBalance)
     {
-        this.Owner = owner;
+        this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
         this.Balance = initialBalance;
     }
