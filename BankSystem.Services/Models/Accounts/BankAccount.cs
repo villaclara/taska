@@ -47,7 +47,6 @@ public abstract class BankAccount
         this.Deposit(initialBalance, DateTime.Now, "Initial deposit");
         this.Number = numberGenerator();
     }
-
     public IList<AccountCashOperation> GetAllOperations() => this._operations;
 
     public void Deposit(decimal amount, DateTime dateTime, string message)

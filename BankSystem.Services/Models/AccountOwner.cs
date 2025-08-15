@@ -48,6 +48,7 @@ public class AccountOwner
         return this.accounts;
     }
 
-    private static void VerifyString(string value, string paramName) => ArgumentException.ThrowIfNullOrEmpty(value, nameof(paramName));
+    private static void VerifyString(string value, string paramName) =>
+        ArgumentException.ThrowIfNullOrEmpty(value);
 }
 
