@@ -1,5 +1,5 @@
 using System.Text;
-using BankSystem.EF.Entities;
+using BankSystem.Services.Models.Accounts;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace BankSystem.Services.Models;
