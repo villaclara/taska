@@ -17,6 +17,6 @@ public class AccountCashOperation
 
     public override string ToString()
     {
-        throw new NotImplementedException();
+        return $"{this.Amount} - {this.Date} - {this.Note}";
     }
 }

@@ -1,14 +1,16 @@
+using System.Globalization;
+using BankSystem.Services.Helpers;
+
 namespace BankSystem.Services.Generators;
 
-internal class SimpleGenerator : IUniqueNumberGenerator
+public class SimpleGenerator : IUniqueNumberGenerator
 {
-    private int lastNumber;
+    private int lastNumber = 1234567890;
 
     public static SimpleGenerator Instance { get; private set; }
 
     private SimpleGenerator()
     {
-        Instance ??= new SimpleGenerator();
     }
 
     static SimpleGenerator()
@@ -18,6 +20,8 @@ internal class SimpleGenerator : IUniqueNumberGenerator
 
     public string Generate()
     {
-        throw new NotImplementedException();
+        var hashed = this.lastNumber.ToString(CultureInfo.InvariantCulture).GenerateHash();
+        this.lastNumber++;
+        return hashed;
     }
 }

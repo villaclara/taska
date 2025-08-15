@@ -1,6 +1,6 @@
 namespace BankSystem.Services.Helpers;
 
-internal static class ValidatorService
+public static class ValidatorService
 {
     public static bool IsCurrencyValid(string currency)
     {
