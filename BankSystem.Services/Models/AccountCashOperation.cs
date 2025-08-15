@@ -17,6 +17,7 @@ public class AccountCashOperation
 
     public override string ToString()
     {
-        return $"{this.Amount} - {this.Date} - {this.Note}";
+        string operationType = this.Amount >= 0 ? "Credited to account" : "Debited from account";
+        return $"{this.Date:MM/dd/yyyy HH:mm:ss} {this.Note} : {operationType:C} {this.Amount}.";
     }
 }

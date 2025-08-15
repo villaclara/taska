@@ -1,4 +1,5 @@
 using System.Text;
+using BankSystem.Services.Helpers;
 using BankSystem.Services.Models.Accounts;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
@@ -17,14 +18,22 @@ public class AccountOwner
 
     public AccountOwner(string firstName, string lastName, string email)
     {
+        VerifyString(firstName, nameof(firstName));
+        VerifyString(lastName, nameof(lastName));
+        VerifyString(email, nameof(email));
+        if (!ValidatorService.IsEmailValid(email))
+        {
+            throw new ArgumentException(email);
+        }
         this.Email = email;
         this.FirstName = firstName;
         this.LastName = lastName;
+        this.accounts = [];
     }
 
     public override string ToString()
     {
-        return $"Name: {this.FirstName} {this.LastName}, Email: {this.Email}";
+        return $"{this.FirstName} {this.LastName}, {this.Email}.";
     }
 
     public void Add(BankAccount? account)
@@ -42,6 +51,11 @@ public class AccountOwner
     public IList<BankAccount> Accounts()
     {
         return this.accounts;
+    }
+
+    private static void VerifyString(string value, string paramName)
+    {
+        ArgumentNullException.ThrowIfNullOrEmpty(value, nameof(paramName));
     }
 }
 
