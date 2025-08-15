@@ -1,6 +1,8 @@
+using BankSystem.Services.Helpers;
+
 namespace BankSystem.Services.Generators;
 
-internal class BasedOnTickUniqueNumberGenerator : IUniqueNumberGenerator
+public class BasedOnTickUniqueNumberGenerator : IUniqueNumberGenerator
 {
     public DateTime startingPoint { get; init; }
 
@@ -11,6 +13,7 @@ internal class BasedOnTickUniqueNumberGenerator : IUniqueNumberGenerator
 
     public string Generate()
     {
-        throw new NotImplementedException();
+        var ticks = DateTime.UtcNow - this.startingPoint;
+        return ticks.ToString().GenerateHash();
     }
 }
