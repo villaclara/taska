@@ -1,3 +1,6 @@
+using BankSystem.Services.Generators;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+
 namespace BankSystem.Services.Models.Accounts;
 
 public class BankAccount
@@ -10,6 +13,16 @@ public class BankAccount
     public int BonusPoints { get; set; }
     public decimal OverDraft { get; set; }
 
+    public BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator)
+    {
+        this.Owner = owner;
+        this.CurrencyCode = currencyCode;
+    }
+    public BankAccount(AccountOwner owner, string currencyCode, Func<string> )
+    {
+        this.Owner = owner;
+        this.CurrencyCode = currencyCode;
+    }
 
 }
 
