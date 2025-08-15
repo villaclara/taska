@@ -1,12 +1,10 @@
-using System;
 using BankSystem.Services.Generators;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace BankSystem.Services.Models.Accounts;
 
 public abstract class BankAccount
 {
-    private List<AccountCashOperation> _operations = [];
+    private readonly List<AccountCashOperation> _operations = [];
     public string Number { get; set; }
     public decimal Balance { get; set; }
     public string CurrencyCode { get; set; }
@@ -14,42 +12,43 @@ public abstract class BankAccount
     public int BonusPoints { get; set; }
     public abstract decimal OverDraft { get; set; }
 
-    public BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator)
+    protected BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator)
     {
+        ArgumentNullException.ThrowIfNull(uniqueNumberGenerator);
+
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
         this.Number = uniqueNumberGenerator.Generate();
     }
-    public BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator)
+    protected BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator)
     {
+        ArgumentNullException.ThrowIfNull(numberGenerator);
+
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
         this.Number = numberGenerator();
     }
-    public BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator, decimal initialBalance)
+    protected BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator, decimal initialBalance)
     {
+        ArgumentNullException.ThrowIfNull(uniqueNumberGenerator);
+
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
-        this.Balance = initialBalance;
-        this.BonusPoints = this.CalculateDepositRewardPoints(initialBalance);
-        this._operations.Add(new AccountCashOperation(initialBalance, DateTime.Now, "Initial operation"));
+        this.Deposit(initialBalance, DateTime.Now, "Initial deposit");
         this.Number = uniqueNumberGenerator.Generate();
     }
 
-    public BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator, decimal initialBalance)
+    protected BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator, decimal initialBalance)
     {
+        ArgumentNullException.ThrowIfNull(numberGenerator);
+
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
-        this.Balance = initialBalance;
-        this.BonusPoints = this.CalculateDepositRewardPoints(initialBalance);
-        this._operations.Add(new AccountCashOperation(initialBalance, DateTime.Now, "Initial operation"));
+        this.Deposit(initialBalance, DateTime.Now, "Initial deposit");
         this.Number = numberGenerator();
     }
 
-    public IList<AccountCashOperation> GetAllOperations()
-    {
-        return this._operations;
-    }
+    public IList<AccountCashOperation> GetAllOperations() => this._operations;
 
     public void Deposit(decimal amount, DateTime dateTime, string message)
     {

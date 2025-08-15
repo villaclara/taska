@@ -7,7 +7,11 @@ public class GoldAccount : BankAccount
     private const int GoldDepositCostPerPoint = 10;
     private const int GoldWithdrawCostPerPoint = 5;
     private const int GoldBalanceCostPerPoint = 5;
-    public override decimal OverDraft { get => 3 * this.BonusPoints; set { } }
+    public override decimal OverDraft
+    {
+        get => 3 * this.BonusPoints;
+        set => throw new NotSupportedException("OverDraft is a calculated value and cannot be set manually.");
+    }
     public GoldAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator) : base(owner, currencyCode, uniqueNumberGenerator)
     { }
 

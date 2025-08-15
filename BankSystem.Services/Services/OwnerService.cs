@@ -24,7 +24,7 @@ public class OwnerService : IDisposable
 
     public IReadOnlyList<AccountOwnerTotalBalanceModel> GetAccountOwnersTotalBalance()
     {
-        var query = context.AccountOwners
+        var query = this.context.AccountOwners
             .SelectMany(owner => owner.BankAccounts, (owner, account) => new
             {
                 owner.Id,

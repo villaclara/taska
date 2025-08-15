@@ -1,20 +1,15 @@
-using System.Text;
 using BankSystem.Services.Helpers;
 using BankSystem.Services.Models.Accounts;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace BankSystem.Services.Models;
 
 public class AccountOwner
 {
-    private string firstName;
-    private string lastName;
     private List<BankAccount> accounts;
-    private string email;
 
-    public string Email { get => this.email; set => this.email = value; }
-    public string FirstName { get => this.firstName; set => this.firstName = value; }
-    public string LastName { get => this.lastName; set => this.lastName = value; }
+    public string Email { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 
     public AccountOwner(string firstName, string lastName, string email)
     {
@@ -53,9 +48,6 @@ public class AccountOwner
         return this.accounts;
     }
 
-    private static void VerifyString(string value, string paramName)
-    {
-        ArgumentNullException.ThrowIfNullOrEmpty(value, nameof(paramName));
-    }
+    private static void VerifyString(string value, string paramName) => ArgumentException.ThrowIfNullOrEmpty(value, nameof(paramName));
 }
 

@@ -4,7 +4,13 @@ namespace BankSystem.Services.Models.Accounts;
 
 public class SilverAccount : BankAccount
 {
-    public override decimal OverDraft { get => 2 * this.BonusPoints; set { } }
+    public override decimal OverDraft
+    {
+        get => 2 * this.BonusPoints;
+        set => throw new NotSupportedException("OverDraft is a calculated value and cannot be set manually.");
+    }
+
+
     private const int SilverDepositCostPerPoint = 5;
     private const int SilverWithdrawCostPerPoint = 2;
     private const int SilverBalanceCostPerPoint = 100;

@@ -7,8 +7,8 @@ public class StandardAccount : BankAccount
     private const int StandardBalanceCostPerPoint = 100;
     public override decimal OverDraft
     {
-        get { return 0; }
-        set { }
+        get => 0;
+        set => throw new NotSupportedException("OverDraft is a calculated value and cannot be set manually.");
     }
 
 

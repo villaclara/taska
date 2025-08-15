@@ -12,7 +12,7 @@ public class AccountService : IDisposable
     }
     public IReadOnlyList<BankAccountFullInfoModel> GetBankAccountsFullInfo()
     {
-        var result = context.BankAccounts
+        var result = this.context.BankAccounts
             .Select(account => new BankAccountFullInfoModel
             {
                 BankAccountId = account.Id,
