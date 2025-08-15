@@ -21,12 +21,12 @@ public class GoldAccount : BankAccount
     public GoldAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator, decimal initialBalance)
         : base(owner, currencyCode, numberGenerator, initialBalance)
     { }
-    public override int CalculateDepositRewardPoints(decimal amount)
+    protected override int CalculateDepositRewardPoints(decimal amount)
     {
         return (int)Math.Max(decimal.Floor(this.Balance / GoldBalanceCostPerPoint) + decimal.Floor(amount / GoldDepositCostPerPoint), 0);
     }
 
-    public override int CalculateWithdrawRewardPoints(decimal amount)
+    protected override int CalculateWithdrawRewardPoints(decimal amount)
     {
         return (int)Math.Max(decimal.Floor(this.Balance / GoldBalanceCostPerPoint) + decimal.Floor(amount / GoldWithdrawCostPerPoint), 0);
     }

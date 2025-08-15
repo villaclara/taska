@@ -23,12 +23,12 @@ public class SilverAccount : BankAccount
         : base(owner, currencyCode, numberGenerator, initialBalance)
     { }
 
-    public override int CalculateDepositRewardPoints(decimal amount)
+    protected override int CalculateDepositRewardPoints(decimal amount)
     {
         return (int)Math.Max(decimal.Floor(this.Balance / SilverBalanceCostPerPoint) + decimal.Floor(amount / SilverDepositCostPerPoint), 0);
     }
 
-    public override int CalculateWithdrawRewardPoints(decimal amount)
+    protected override int CalculateWithdrawRewardPoints(decimal amount)
     {
         return (int)Math.Max(decimal.Floor(this.Balance / SilverBalanceCostPerPoint) + decimal.Floor(amount / SilverWithdrawCostPerPoint), 0);
     }

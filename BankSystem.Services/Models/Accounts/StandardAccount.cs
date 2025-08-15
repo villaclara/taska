@@ -26,12 +26,12 @@ public class StandardAccount : BankAccount
         : base(owner, currencyCode, numberGenerator, initialBalance)
     { }
 
-    public override int CalculateDepositRewardPoints(decimal amount)
+    protected override int CalculateDepositRewardPoints(decimal amount)
     {
         return (int)Math.Max(decimal.Floor(this.Balance / StandardBalanceCostPerPoint), 0);
     }
 
-    public override int CalculateWithdrawRewardPoints(decimal amount)
+    protected override int CalculateWithdrawRewardPoints(decimal amount)
     {
         return (int)Math.Max(decimal.Floor(this.Balance / StandardBalanceCostPerPoint), 0);
     }

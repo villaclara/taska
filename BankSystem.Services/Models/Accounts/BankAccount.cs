@@ -18,11 +18,13 @@ public abstract class BankAccount
     {
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
+        this.Number = uniqueNumberGenerator.Generate();
     }
     public BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator)
     {
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
+        this.Number = numberGenerator();
     }
     public BankAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator, decimal initialBalance)
     {
@@ -31,7 +33,7 @@ public abstract class BankAccount
         this.Balance = initialBalance;
         this.BonusPoints = this.CalculateDepositRewardPoints(initialBalance);
         this._operations.Add(new AccountCashOperation(initialBalance, DateTime.Now, "Initial operation"));
-
+        this.Number = uniqueNumberGenerator.Generate();
     }
 
     public BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator, decimal initialBalance)
@@ -41,6 +43,7 @@ public abstract class BankAccount
         this.Balance = initialBalance;
         this.BonusPoints = this.CalculateDepositRewardPoints(initialBalance);
         this._operations.Add(new AccountCashOperation(initialBalance, DateTime.Now, "Initial operation"));
+        this.Number = numberGenerator();
     }
 
     public IList<AccountCashOperation> GetAllOperations()
@@ -57,13 +60,17 @@ public abstract class BankAccount
 
     public void Withdraw(decimal amount, DateTime dateTime, string message)
     {
+        if (this.Balance < amount)
+        {
+            throw new InvalidOperationException();
+        }
         this.Balance -= amount;
         this.BonusPoints += this.CalculateWithdrawRewardPoints(amount);
         this._operations.Add(new AccountCashOperation(amount, dateTime, message));
     }
 
-    public abstract int CalculateDepositRewardPoints(decimal amount);
-    public abstract int CalculateWithdrawRewardPoints(decimal amount);
+    protected abstract int CalculateDepositRewardPoints(decimal amount);
+    protected abstract int CalculateWithdrawRewardPoints(decimal amount);
 
 }
 
