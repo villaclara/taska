@@ -1,3 +1,4 @@
+using System;
 using BankSystem.Services.Generators;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
@@ -28,6 +29,9 @@ public abstract class BankAccount
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
         this.Balance = initialBalance;
+        this.BonusPoints = this.CalculateDepositRewardPoints(initialBalance);
+        this._operations.Add(new AccountCashOperation(initialBalance, DateTime.Now, "Initial operation"));
+
     }
 
     public BankAccount(AccountOwner owner, string currencyCode, Func<string> numberGenerator, decimal initialBalance)
@@ -35,6 +39,8 @@ public abstract class BankAccount
         this.AccountOwner = owner;
         this.CurrencyCode = currencyCode;
         this.Balance = initialBalance;
+        this.BonusPoints = this.CalculateDepositRewardPoints(initialBalance);
+        this._operations.Add(new AccountCashOperation(initialBalance, DateTime.Now, "Initial operation"));
     }
 
     public IList<AccountCashOperation> GetAllOperations()
@@ -45,11 +51,15 @@ public abstract class BankAccount
     public void Deposit(decimal amount, DateTime dateTime, string message)
     {
         this.Balance += amount;
+        this.BonusPoints += this.CalculateDepositRewardPoints(amount);
+        this._operations.Add(new AccountCashOperation(amount, dateTime, message));
     }
 
     public void Withdraw(decimal amount, DateTime dateTime, string message)
     {
         this.Balance -= amount;
+        this.BonusPoints += this.CalculateWithdrawRewardPoints(amount);
+        this._operations.Add(new AccountCashOperation(amount, dateTime, message));
     }
 
     public abstract int CalculateDepositRewardPoints(decimal amount);
