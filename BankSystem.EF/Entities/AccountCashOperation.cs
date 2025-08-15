@@ -1,15 +1,25 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace BankSystem.EF.Entities;
 
 public class AccountCashOperation
 {
+    [Key]
+    [Column("account_cash_operation_id")]
     public int Id { get; set; }
 
+    [ForeignKey(nameof(BankAccount))]
+    [Column("bank_account_id")]
     public int BankAccountId { get; set; }
 
+    [Column("amount")]
     public decimal Amount { get; set; }
 
+    [Column("operation_date_time")]
     public string OperationDateTime { get; set; }
 
+    [Column("note", TypeName = "varchar(160)")]
     public string Note { get; set; }
 
     public BankAccount BankAccount { get; set; }
