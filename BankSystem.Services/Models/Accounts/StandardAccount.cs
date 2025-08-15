@@ -11,6 +11,7 @@ public class StandardAccount : BankAccount
         set { }
     }
 
+
     public StandardAccount(AccountOwner owner, string currencyCode, IUniqueNumberGenerator uniqueNumberGenerator) : base(owner, currencyCode, uniqueNumberGenerator)
     { }
 

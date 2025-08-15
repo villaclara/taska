@@ -42,12 +42,12 @@ public abstract class BankAccount
         return this._operations;
     }
 
-    public void Deposit(decimal amount, DateTime dateTime)
+    public void Deposit(decimal amount, DateTime dateTime, string message)
     {
         this.Balance += amount;
     }
 
-    public void Withdraw(decimal amount, DateTime dateTime)
+    public void Withdraw(decimal amount, DateTime dateTime, string message)
     {
         this.Balance -= amount;
     }
