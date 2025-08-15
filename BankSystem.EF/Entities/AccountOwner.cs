@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BankSystem.EF.Entities;
 
+[Table("account_owner")]
 public class AccountOwner
 {
     [Key]

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BankSystem.EF.Entities;
 
+[Table("currency_code")]
 public class CurrencyCode
 {
     [Key]
