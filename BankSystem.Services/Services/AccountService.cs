@@ -12,7 +12,20 @@ public class AccountService : IDisposable
     }
     public IReadOnlyList<BankAccountFullInfoModel> GetBankAccountsFullInfo()
     {
-        throw new NotImplementedException();
+        var result = context.BankAccounts
+            .Select(account => new BankAccountFullInfoModel
+            {
+                BankAccountId = account.Id,
+                FirstName = account.AccountOwner.FirstName,
+                LastName = account.AccountOwner.LastName,
+                AccountNumber = account.Number,
+                Balance = account.Balance,
+                CurrencyCode = account.CurrencyCode.CurrenciesCode,
+                BonusPoints = account.BonusPoints
+            })
+            .ToList();
+
+        return result;
     }
 
     public void Dispose()

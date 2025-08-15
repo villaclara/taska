@@ -24,6 +24,30 @@ public class OwnerService : IDisposable
 
     public IReadOnlyList<AccountOwnerTotalBalanceModel> GetAccountOwnersTotalBalance()
     {
-        throw new NotImplementedException();
+        var query = context.AccountOwners
+            .SelectMany(owner => owner.BankAccounts, (owner, account) => new
+            {
+                owner.Id,
+                owner.FirstName,
+                owner.LastName,
+                CurrencyCode = account.CurrencyCode.CurrenciesCode,
+                Balance = (double)account.Balance
+            })
+            .GroupBy(x => new { x.Id, x.FirstName, x.LastName, x.CurrencyCode })
+            .Select(g => new AccountOwnerTotalBalanceModel
+            {
+                AccountOwnerId = g.Key.Id,
+                FirstName = g.Key.FirstName,
+                LastName = g.Key.LastName,
+                CurrencyCode = g.Key.CurrencyCode,
+                Total = (decimal)g.Sum(x => x.Balance)
+            })
+            .ToList();
+
+        var result = query
+            .OrderByDescending(x => (double)x.Total)
+            .ToList();
+
+        return result;
     }
 }
