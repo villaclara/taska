@@ -1,11 +1,9 @@
-using BankSystem.EF.Entities;
 using BankSystem.Services.Models;
 
 namespace BankSystem.Services.Services;
-
-public class OwnerService
+public class AccountService
 {
-    public IReadOnlyList<AccountOwnerTotalBalanceModel> GetAccountOwnersTotalBalance()
+    public IReadOnlyList<BankAccountFullInfoModel> GetBankAccountsFullInfo()
     {
         throw new NotImplementedException();
     }
